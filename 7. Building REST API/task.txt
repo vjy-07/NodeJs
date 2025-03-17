@@ -1,0 +1,15 @@
+REST API-> JSON(using in this project)
+ 
+GET /api/users - list all users
+GET /api/users/1 - get the user with id 1
+Get /api/users/2 - get the user with id 2
+
+//for api tesing and for below routes we are using postman
+
+POST /api/users - create new user
+
+PATCH /api/users/1 - edit the user with id 1
+
+DELETE /api/users/1 - delete the user with id 1
+
+we are using mockaroo.com to generate the fake data for our project

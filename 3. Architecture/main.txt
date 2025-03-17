@@ -1,0 +1,9 @@
+client->request->server(nodejs)
+
+when server receives the request it stores the request in the event queue(fifo),
+the request(syncronous(blocking) or asynchronous(non-blocking)) is then taken by eventloop,
+eventloop then processes the request, if it is non-bolcking it sends the response to the client back,
+if it is blocking operation it takes a thread from the threadpool for processing the request then returns to the client.
+if no threads are available in threadpool the next incoming requests will have to wait for the threads.
+
+by default the threads will be 4 and the max threads we can have will the the no.of cores the system have(depends on the system(cpus)).

@@ -1,0 +1,26 @@
+status codes indicates whethere a specific http request has been successfully completed or not.
+
+5 types:
+informational response(100-199)
+successful responses(200-299)
+redirection messages(300-399)
+client error responses(400-499)
+server error responses(500-599)
+
+status codes:
+200 -> ok -> the request succeeded
+201 -> created -> new resource created successfully ->post and put requests
+202 -> accepted
+204 -> no content to send for request
+
+
+400 -> bad request
+401 -> unauthorized
+402 -> payment required
+403 -> forbidden (logged in but no permission)
+404 -> not found
+
+500 -> internal server error
+501 -> not implemented
+502 -> bad gateway
+503 -> service unavailable

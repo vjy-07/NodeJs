@@ -1,0 +1,20 @@
+architecture
+
+client ->(username, password) -> to server (verifies in database)
+if correct details server generates jwt(includes user data )token 
+
+two ways to pass this token to the client
+1) cookies  
+store the (cookiename ,user data) in a cookie then pass to user (brower stores the cookies)
+server checks the token in the cookie when user request (browers send the cookie in the request)
+These are domain specific 
+we can set the domain, secure by default, we can set expiry date 
+cookies limited to browser(not for apps)
+
+2) response
+server sends the token as simple response (res.json({token}))
+client have to store the token
+when sending request to server pass the token in header
+Authorization : Bearer <token> (server reads this header and extracts the token and verifies)
+
+in react applications we can use the concept of local storage to store the token

@@ -1,0 +1,44 @@
+stateful authentication
+
+server maintains session data for each logged-in user
+1) user send username and password to server (server verifies them in database)
+
+2) if it is valid it creates a session and stores (a session id is generated and stored)
+
+3) the server sends the session id(cookie ) to the client
+
+4) for every request, the client sends the sessionid in cookies(server checks it to validate the user)
+
+5) when user logs out, the server removes the session from storage(the cookie become invalid)
+
+////////////
+when server restarts all users will logout
+
+it is memory intensive
+
+stateful -> stateless code modification in this project
+service->auth.js 
+const sessionIdToUserMap = new Map();
+function setUser(id, user) {
+  sessionIdToUserMap.set(id, user);
+}
+function getUser(id) {
+  return sessionIdToUserMap.get(id);
+}
+module.exports = { setUser, getUser };
+
+controllers->user.js
+async function handleUserLogin(req, res) {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email, password });
+  if (!user)
+    return res.render("login", {
+      error: "invalid username or password",
+    });
+  const sessionId = uuidv4();
+  setUser(sessionId, user);
+  res.cookie("uid", sessionId);
+  return res.redirect("/");
+}
+
+->so we use stateless

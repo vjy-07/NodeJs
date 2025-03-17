@@ -1,0 +1,34 @@
+stateless authentication
+
+no session is stored on the server
+
+1) user sends username and password (server verifies credintials in database)
+2) if valid, server creates a jwt(contains user info and expiration time also signed with a secret key),
+    then it sends to the client
+3) client stores jwt
+4) for each request, client sends jwt in header(server verifies using secret key)
+
+controller user.js
+async function handleUserLogin(req, res) {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email, password });
+  if (!user)
+    return res.render("login", {
+      error: "invalid username or password",
+    });
+
+  const token = setUser(user);
+  res.cookie("uid", token);
+  return res.redirect("/");
+}
+
+middleware auth.js
+async function restrictToLoggedInUserOnly(req, res, next) {
+  const userUid = req.cookies?.uid;
+  if (!userUid) return res.redirect("/login");
+  const user = getUser(userUid);
+
+  if (!user) return res.redirect("/login");
+  req.user = user;
+  next();
+}

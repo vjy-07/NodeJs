@@ -1,0 +1,16 @@
+version
+4.18.5
+
+(3rd part) 5-> minor fixes(optional)
+4.18.6, 4.18.7 etc...
+
+(2nd part) 18-> bug fixes(security fix)
+4.19.x, 4.20.x, etc...
+
+(1st part) 4-> major release 
+4.19.x -> 5.1.0
+
+^4.18.5 -> only bug fixes and minor fixes be updated , major is fixed.
+~4.18.9 -> only minor fixes will be updated
+
+for an existing project done in version 4.x.x we should not update its major version, it will break the application
