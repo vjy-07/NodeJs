@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const { connectToMongoDB } = require("./connection");
-const { restrictToLoggedInUserOnly, checkAuth } = require("./middlewares/auth");
+const { checkForAuthentication, restrictTo } = require("./middlewares/auth");
 
 const staticRoute = require("./routes/staticRouter");
 const urlRoute = require("./routes/url");
@@ -23,10 +23,11 @@ app.set("views", path.resolve("./views"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(checkForAuthentication);
 
 //routes
-app.use("/url", restrictToLoggedInUserOnly, urlRoute);
+app.use("/url", restrictTo(["NORMAL", "ADMIN"]), urlRoute);
 app.use("/user", userRoute);
-app.use("/", checkAuth, staticRoute);
+app.use("/", staticRoute);
 
 app.listen(PORT, () => console.log(`server started on PORT: ${PORT}`));
